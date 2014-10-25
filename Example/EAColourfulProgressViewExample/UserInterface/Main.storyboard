@@ -12,10 +12,22 @@
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" alpha="0.74999999999999978" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Colourful Progress Views" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8LV-TF-ucY">
+                                <rect key="frame" x="155" y="46" width="290" height="177"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="290" id="AZk-XB-1o1"/>
+                                    <constraint firstAttribute="height" constant="177" id="tbw-FW-kyc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Kailasa-Bold" family="Kailasa" pointSize="34"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="shadowOffset" width="0.0" height="1"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iBx-HD-4cE" customClass="EAColourfulProgressView">
                                 <rect key="frame" x="191" y="275" width="218" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -43,10 +55,10 @@
                                         <integer key="value" value="3"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="currentValue">
-                                        <integer key="value" value="25"/>
+                                        <integer key="value" value="0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="maximumValue">
-                                        <integer key="value" value="100"/>
+                                        <integer key="value" value="60"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="labelColor">
                                         <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -57,14 +69,121 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="showLabels" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8IF-gL-pcS" userLabel="Tiny Colourful Progress View" customClass="EAColourfulProgressView">
+                                <rect key="frame" x="162" y="345" width="277" height="20"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="277" id="KAD-C1-EeY"/>
+                                    <constraint firstAttribute="height" constant="20" id="cjV-W3-1ha"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="initialFillColor">
+                                        <color key="value" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="oneThirdFillColor">
+                                        <color key="value" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="finalFillColor">
+                                        <color key="value" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="twoThirdsFillColor">
+                                        <color key="value" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="currentValue">
+                                        <integer key="value" value="75"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="maximumValue">
+                                        <integer key="value" value="1000"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="labelColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="containerColor">
+                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showLabels" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderLineWidth">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kbg-39-2eh" userLabel="Tiny Colourful Progress View 2" customClass="EAColourfulProgressView">
+                                <rect key="frame" x="161" y="385" width="277" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="S0x-gx-yNQ"/>
+                                    <constraint firstAttribute="width" constant="277" id="uw5-yF-BTj"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="initialFillColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="oneThirdFillColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="finalFillColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="twoThirdsFillColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="currentValue">
+                                        <integer key="value" value="920"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="maximumValue">
+                                        <integer key="value" value="1000"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="labelColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="containerColor">
+                                        <color key="value" red="0.16300884046052633" green="0.042017886513157895" blue="0.42395662006578949" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showLabels" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderLineWidth">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="iBx-HD-4cE" secondAttribute="centerY" id="1F4-41-SaN"/>
+                            <constraint firstAttribute="centerX" secondItem="8IF-gL-pcS" secondAttribute="centerX" id="9ay-5W-BF0"/>
+                            <constraint firstAttribute="centerY" secondItem="8IF-gL-pcS" secondAttribute="centerY" id="ANu-EI-3F6"/>
+                            <constraint firstItem="8IF-gL-pcS" firstAttribute="top" secondItem="kbg-39-2eh" secondAttribute="bottom" constant="65" id="C4H-tj-Ogh"/>
+                            <constraint firstItem="8IF-gL-pcS" firstAttribute="top" secondItem="iBx-HD-4cE" secondAttribute="bottom" constant="20" id="IxE-uY-Yfx"/>
+                            <constraint firstAttribute="centerX" secondItem="kbg-39-2eh" secondAttribute="centerX" id="K1V-aZ-OSW"/>
+                            <constraint firstAttribute="centerX" secondItem="8LV-TF-ucY" secondAttribute="centerX" id="Qm1-Vn-eZv"/>
+                            <constraint firstItem="kbg-39-2eh" firstAttribute="top" secondItem="iBx-HD-4cE" secondAttribute="bottom" constant="13" id="YLY-z7-HTV"/>
+                            <constraint firstItem="kbg-39-2eh" firstAttribute="top" secondItem="8IF-gL-pcS" secondAttribute="bottom" constant="20" id="ZnX-s1-bmR"/>
                             <constraint firstAttribute="centerX" secondItem="iBx-HD-4cE" secondAttribute="centerX" id="bZh-Cr-Mwq"/>
+                            <constraint firstAttribute="centerX" secondItem="8IF-gL-pcS" secondAttribute="centerX" constant="29.5" id="dST-gV-6Sv"/>
+                            <constraint firstItem="8LV-TF-ucY" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="46" id="fZP-6T-vkb"/>
+                            <constraint firstItem="8LV-TF-ucY" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="46" id="mHh-oh-XL4"/>
+                            <constraint firstAttribute="centerY" secondItem="kbg-39-2eh" secondAttribute="centerY" id="p7f-mm-Txa"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="mHh-oh-XL4"/>
+                                <exclude reference="ANu-EI-3F6"/>
+                                <exclude reference="C4H-tj-Ogh"/>
+                                <exclude reference="dST-gV-6Sv"/>
+                                <exclude reference="YLY-z7-HTV"/>
+                                <exclude reference="p7f-mm-Txa"/>
+                            </mask>
+                        </variation>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="progressView" destination="iBx-HD-4cE" id="Iui-VQ-mNp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
