@@ -1,7 +1,3 @@
-#
-# Be sure to run `pod lib lint EAColourfulProgressView.podspec' to ensure this is a
-# valid spec and remove all comments before submitting the spec.
-
 Pod::Spec.new do |s|
   s.name             = "EAColourfulProgressView"
   s.version          = "0.1.0"
