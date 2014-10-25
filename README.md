@@ -5,7 +5,9 @@ EAColourfulProgressView
 
 EAColourfulProgressView is a custom progress view where the current filling colour is generated between two colours, based on the current value.
 
-It takes advantages of `IBDesignable` and `IBInspectable` so that you can completely customize with without leaving the Interface Builder.
+It takes advantages of `IBDesignable` and `IBInspectable` so that you can completely customize with without leaving the Interface Builder:
+
+![](https://raw.githubusercontent.com/Eddpt/EAColourfulProgressView/master/IBInspectable.png)
 
 It gives you the possibility to update the current value by calling:
 ```objective-c
@@ -26,6 +28,9 @@ Add this in your Podfile
 ```
 pod 'EAColourfulProgressView', '~> 0.1.0'
 ```
+
+##Usage
+Set the `Custom Class` of a `UIView` to `EAColourfulProgressView` in Interface Builder, customize the available variables, build and run ;)
 
 ##Future improvements
 
