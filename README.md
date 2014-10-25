@@ -1,6 +1,8 @@
 EAColourfulProgressView
 =======================
 
+![](https://raw.githubusercontent.com/Eddpt/EAColourfulProgressView/develop/demo.gif)
+
 EAColourfulProgressView is a custom progress view where the current filling colour is generated between two colours, based on the current value.
 
 It takes advantages of `IBDesignable` and `IBInspectable` so that you can completely customize with without leaving the Interface Builder.
