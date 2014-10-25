@@ -31,17 +31,33 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
 
 #pragma mark - Lifecycle
 
-- (void)layoutSubviews
+- (void)awakeFromNib
 {
-  [super layoutSubviews];
+  [super awakeFromNib];
   
+  [self setupView];
+}
+
+
+#pragma mark - IB Live Rendering Preparation
+
+- (void)prepareForInterfaceBuilder
+{
+  [super prepareForInterfaceBuilder];
+  
+  [self setupView];
+}
+
+
+#pragma mark - Setup Methods
+
+- (void)setupView
+{
   [self setupBackgroundView];
   [self setupFillingView];
   [self setupInitialLabel];
   [self setupFinalLabel];
 }
-
-#pragma mark - Setup Methods
 
 - (void)setupBackgroundView
 {
@@ -52,8 +68,9 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
   
   [self addSubview:self.backgroundView];
   
+  NSString *visualFormatString = [NSString stringWithFormat:@"V:|-0-[_backgroundView(%@)]->=0-|", @(height)];
   [self addConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-0-[_backgroundView(%@)]->=0-|", @(height)]
+                        constraintsWithVisualFormat:visualFormatString
                         options:0 metrics:nil
                         views:NSDictionaryOfVariableBindings(_backgroundView)]];
   [self addConstraints:[NSLayoutConstraint
@@ -79,12 +96,14 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
   
   [self.backgroundView addSubview:self.fillingView];
   
+  NSString *visualFormatString = [NSString stringWithFormat:@"V:|-%@-[_fillingView(%@)]->=%@-|", borderString, @(height), borderString];
   [self.backgroundView addConstraints:[NSLayoutConstraint
-                                       constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-%@-[_fillingView(%@)]->=%@-|", borderString, @(height), borderString]
+                                       constraintsWithVisualFormat:visualFormatString
                                        options:0 metrics:nil
                                        views:NSDictionaryOfVariableBindings(_fillingView)]];
+  visualFormatString = [NSString stringWithFormat:@"H:|-%@-[_fillingView]->=%@-|", borderString, borderString];
   [self.backgroundView addConstraints:[NSLayoutConstraint
-                                       constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|-%@-[_fillingView]->=%@-|", borderString, borderString]
+                                       constraintsWithVisualFormat:visualFormatString
                                        options:0 metrics:nil
                                        views:NSDictionaryOfVariableBindings(_fillingView)]];
   
@@ -111,13 +130,14 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
   self.initialLabel = [[UILabel alloc] init];
   self.initialLabel.translatesAutoresizingMaskIntoConstraints = NO;
   self.initialLabel.text = @"0";
-  self.initialLabel.textColor = self.labelColor;
+  self.initialLabel.textColor = self.labelTextColor;
   self.initialLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
   self.initialLabel.textAlignment = NSTextAlignmentLeft;
   [self addSubview:self.initialLabel];
   
+  NSString *visualFormatString = [NSString stringWithFormat:@"V:|[_backgroundView]-%@-[_initialLabel]|", @(EAColourfulProgressViewLabelTopMargin)];
   [self addConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|[_backgroundView]-%@-[_initialLabel]|", @(EAColourfulProgressViewLabelTopMargin)]
+                        constraintsWithVisualFormat:visualFormatString
                         options:0 metrics:nil
                         views:NSDictionaryOfVariableBindings(_backgroundView, _initialLabel)]];
   [self addConstraints:[NSLayoutConstraint
@@ -135,13 +155,14 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
   self.finalLabel = [[UILabel alloc] init];
   self.finalLabel.translatesAutoresizingMaskIntoConstraints = NO;
   self.finalLabel.text = [NSString stringWithFormat:@"%zd", self.maximumValue];
-  self.finalLabel.textColor = self.labelColor;
+  self.finalLabel.textColor = self.labelTextColor;
   self.finalLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
   self.finalLabel.textAlignment = NSTextAlignmentRight;
   [self addSubview:self.finalLabel];
   
+  NSString *visualFormatString = [NSString stringWithFormat:@"V:|[_backgroundView]-%@-[_finalLabel]|", @(EAColourfulProgressViewLabelTopMargin)];
   [self addConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|[_backgroundView]-%@-[_finalLabel]|", @(EAColourfulProgressViewLabelTopMargin)]
+                        constraintsWithVisualFormat:visualFormatString
                         options:0
                         metrics:nil
                         views:NSDictionaryOfVariableBindings(_backgroundView, _finalLabel)]];
@@ -155,7 +176,7 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
 
 #pragma mark - Update Filling View
 
-- (void)updateToCurrentValue:(NSInteger)currentValue
+- (void)updateToCurrentValue:(NSInteger)currentValue animated:(BOOL)animated
 {
   self.currentValue = currentValue;
   
@@ -163,11 +184,17 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
   CGFloat width = ceilf((self.backgroundView.bounds.size.width - borders) * self.fractionLeft);
   
   self.fillingWidthConstraint.constant = width;
-  [UIView animateWithDuration:0.4f animations:^{
-    [self.fillingView layoutIfNeeded];
+  
+  if (animated) {
+    [UIView animateWithDuration:0.4f animations:^{
+      [self.fillingView layoutIfNeeded];
+      self.fillingView.backgroundColor = self.fillingColor;
+    }];
+  } else {
     self.fillingView.backgroundColor = self.fillingColor;
-  }];
+  }
 }
+
 
 #pragma mark - Private Helpers
 
@@ -178,18 +205,14 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
   UIColor *finalSegmentColor = [self finalSegmentColorForSegmentType:segmentType];
   CGFloat initialRed, initialGreen, initialBlue;
   CGFloat finalRed, finalGreen, finalBlue;
+  float segmentFractionLeft = self.segmentFractionLeft;
   
   [initialSegmentColor getRed:&initialRed green:&initialGreen blue:&initialBlue alpha:nil];
   [finalSegmentColor getRed:&finalRed green:&finalGreen blue:&finalBlue alpha:nil];
   
-  CGFloat redDelta = (initialRed - finalRed);
-  CGFloat greenDelta = (initialGreen - finalGreen);
-  CGFloat blueDelta = (initialBlue - finalBlue);
-  float segmentFractionLeft = self.segmentFractionLeft;
-  
-  finalRed = initialRed - redDelta * segmentFractionLeft;
-  finalGreen = initialGreen - greenDelta * segmentFractionLeft;
-  finalBlue = initialBlue - blueDelta * segmentFractionLeft;
+  finalRed = initialRed - (initialRed - finalRed) * segmentFractionLeft;
+  finalGreen = initialGreen - (initialGreen - finalGreen) * segmentFractionLeft;
+  finalBlue = initialBlue - (initialBlue - finalBlue) * segmentFractionLeft;
   
   return [UIColor colorWithRed:finalRed green:finalGreen blue:finalBlue alpha:0.8f];
 }
@@ -197,8 +220,9 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
 - (EAColourfulProgressViewType)segmentTypeForCurrentValue
 {
   float currentPercentage = self.fractionLeft * 100;
-  float segmentSize = ((float)self.maximumValue) / EAColourfulProgressViewNumberOfSegments;
-  float remainder = segmentSize - (((NSInteger)self.maximumValue) / ((NSUInteger)EAColourfulProgressViewNumberOfSegments));
+  float segmentFloatSize = ((float)self.maximumValue) / EAColourfulProgressViewNumberOfSegments;
+  float segmentIntegerSize = ((NSInteger)self.maximumValue) / ((NSUInteger)EAColourfulProgressViewNumberOfSegments);
+  float remainder = segmentFloatSize - segmentIntegerSize;
   
   if (currentPercentage < (EAColourfulProgressViewType0to33 + remainder)) {
     return EAColourfulProgressViewType0to33;

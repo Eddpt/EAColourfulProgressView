@@ -11,7 +11,9 @@
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet EAColourfulProgressView *progressView;
+@property (weak, nonatomic) IBOutlet EAColourfulProgressView *tinyProgressView;
 @property (strong, nonatomic) NSTimer *timer;
+@property (strong, nonatomic) NSTimer *timer2;
 @end
 
 @implementation ViewController
@@ -28,11 +30,16 @@
                                               selector:@selector(updateProgressView:)
                                               userInfo:nil
                                                repeats:YES];
+  self.timer2 = [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                                 target:self
+                                               selector:@selector(updateTinyProgressView:)
+                                               userInfo:nil
+                                                repeats:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-  self.timer = nil;
+  self.timer = self.timer2 = nil;
   
   [super viewWillDisappear:animated];
 }
@@ -50,9 +57,21 @@
     newCurrentValue = self.progressView.currentValue - 1;
   }
   
-  [self.progressView updateFillingWithCurrentValue:newCurrentValue];
+  [self.progressView updateToCurrentValue:newCurrentValue animated:YES];
 }
 
+- (void)updateTinyProgressView:(NSTimer *)timer
+{
+  NSInteger newCurrentValue;
+  
+  if (self.tinyProgressView.currentValue == 0) {
+    newCurrentValue = self.tinyProgressView.maximumValue;
+  } else {
+    newCurrentValue = self.tinyProgressView.currentValue - 1;
+  }
+  
+  [self.tinyProgressView updateToCurrentValue:newCurrentValue animated:YES];
+}
 
 #pragma mark - Getters & Setters
 
@@ -64,6 +83,16 @@
   
   [_timer invalidate];
   _timer = timer;
+}
+
+- (void)setTimer2:(NSTimer *)timer2
+{
+  if (timer2 == _timer2) {
+    return;
+  }
+  
+  [_timer2 invalidate];
+  _timer2 = timer2;
 }
 
 @end
