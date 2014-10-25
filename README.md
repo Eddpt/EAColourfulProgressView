@@ -30,7 +30,7 @@ pod 'EAColourfulProgressView', '~> 0.1.0'
 ```
 
 ##Usage
-Set the `Custom Class` of a `UIView` to `EAColourfulProgressView` in Interface Builder, customize the available variables, build and run ;)
+Set the `Custom Class` of a `UIView` to `EAColourfulProgressView` in Interface Builder, customize the available variables and see them being live rendered ;)
 
 ##Future improvements
 
