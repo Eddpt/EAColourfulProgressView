@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "EAColourfulProgressView.h"
 
+@import CoreGraphics;
+
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet EAColourfulProgressView *progressView;
 @property (weak, nonatomic) IBOutlet EAColourfulProgressView *tinyProgressView;
@@ -20,6 +22,19 @@
 
 
 #pragma mark - Lifecycle
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  
+  CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+  gradientLayer.colors = @[(id)[UIColor colorWithRed:0 green:150/255.0f blue:53/255.0f alpha:0.6f].CGColor,
+                           (id)[UIColor colorWithRed:0 green:116/255.0 blue:94/255.0f alpha:0.6f].CGColor,
+                           (id)[UIColor colorWithRed:0 green:76/255.0f blue:58/255.0f alpha:0.6f].CGColor];
+  CAGradientLayer *backgroundLayer = gradientLayer;
+  backgroundLayer.frame = self.view.bounds;
+  [self.view.layer insertSublayer:backgroundLayer atIndex:0];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
