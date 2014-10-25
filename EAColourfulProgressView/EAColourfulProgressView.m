@@ -22,6 +22,8 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
 @property (nonatomic, strong) UIView *fillingView;
 @property (nonatomic, strong) UILabel *initialLabel;
 @property (nonatomic, strong) UILabel *finalLabel;
+
+@property (nonatomic, strong) NSLayoutConstraint *fillingWidthConstraint;
 @end
 
 @implementation EAColourfulProgressView
@@ -68,6 +70,7 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
   CGFloat borders = 2 * self.borderLineWidth;
   CGFloat width = ceilf((self.backgroundView.bounds.size.width - borders) * self.fractionLeft);
   CGFloat height = (self.backgroundView.bounds.size.height - borders);
+  NSString *borderString = @(self.borderLineWidth).stringValue;
   
   self.fillingView = [[UIView alloc] initWithFrame:CGRectMake(self.borderLineWidth, self.borderLineWidth,
                                                               width, height)];
@@ -76,16 +79,24 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
   
   [self.backgroundView addSubview:self.fillingView];
   
-  NSString *borderString = @(self.borderLineWidth).stringValue;
+  [self.backgroundView addConstraints:[NSLayoutConstraint
+                                       constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-%@-[_fillingView(%@)]->=%@-|", borderString, @(height), borderString]
+                                       options:0 metrics:nil
+                                       views:NSDictionaryOfVariableBindings(_fillingView)]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint
+                                       constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|-%@-[_fillingView]->=%@-|", borderString, borderString]
+                                       options:0 metrics:nil
+                                       views:NSDictionaryOfVariableBindings(_fillingView)]];
   
-  [self.backgroundView addConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-%@-[_fillingView(%@)]->=%@-|", borderString, @(height), borderString]
-                        options:0 metrics:nil
-                        views:NSDictionaryOfVariableBindings(_fillingView)]];
-  [self.backgroundView addConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|-%@-[_fillingView(%@)]->=%@-|", borderString, @(width), borderString]
-                        options:0 metrics:nil
-                        views:NSDictionaryOfVariableBindings(_fillingView)]];
+  self.fillingWidthConstraint = [NSLayoutConstraint constraintWithItem:self.fillingView
+                                                             attribute:NSLayoutAttributeWidth
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:nil
+                                                             attribute:0
+                                                            multiplier:1
+                                                              constant:width];
+  [self.fillingView addConstraint:self.fillingWidthConstraint];
+
   
   self.fillingView.layer.cornerRadius = (width > self.cornerRadius) ? self.cornerRadius : 0;
   self.fillingView.layer.masksToBounds = YES;
@@ -104,6 +115,7 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
   self.initialLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
   self.initialLabel.textAlignment = NSTextAlignmentLeft;
   [self addSubview:self.initialLabel];
+  
   [self addConstraints:[NSLayoutConstraint
                         constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|[_backgroundView]-%@-[_initialLabel]|", @(EAColourfulProgressViewLabelTopMargin)]
                         options:0 metrics:nil
@@ -127,6 +139,7 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
   self.finalLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
   self.finalLabel.textAlignment = NSTextAlignmentRight;
   [self addSubview:self.finalLabel];
+  
   [self addConstraints:[NSLayoutConstraint
                         constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|[_backgroundView]-%@-[_finalLabel]|", @(EAColourfulProgressViewLabelTopMargin)]
                         options:0
@@ -139,6 +152,22 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
                         views:NSDictionaryOfVariableBindings(_initialLabel, _finalLabel)]];
 }
 
+
+#pragma mark - Update Filling View
+
+- (void)updateToCurrentValue:(NSInteger)currentValue
+{
+  self.currentValue = currentValue;
+  
+  CGFloat borders = 2 * self.borderLineWidth;
+  CGFloat width = ceilf((self.backgroundView.bounds.size.width - borders) * self.fractionLeft);
+  
+  self.fillingWidthConstraint.constant = width;
+  [UIView animateWithDuration:0.4f animations:^{
+    [self.fillingView layoutIfNeeded];
+    self.fillingView.backgroundColor = self.fillingColor;
+  }];
+}
 
 #pragma mark - Private Helpers
 

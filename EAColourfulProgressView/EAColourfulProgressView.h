@@ -30,5 +30,6 @@ IB_DESIGNABLE
 
 @property (nonatomic, assign) IBInspectable BOOL showLabels;
 
+- (void)updateToCurrentValue:(NSInteger)currentValue;
 
 @end
