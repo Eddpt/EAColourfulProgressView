@@ -12,7 +12,6 @@
 		5C4008C219FB9566001FBB6B /* EAColourfulProgressViewExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4008C119FB9566001FBB6B /* EAColourfulProgressViewExampleTests.m */; };
 		5C4008CF19FB9880001FBB6B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4008CE19FB9880001FBB6B /* AppDelegate.m */; };
 		5C4008D219FB98BE001FBB6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C4008D019FB98BE001FBB6B /* Main.storyboard */; };
-		5C4008D319FB98BE001FBB6B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C4008D119FB98BE001FBB6B /* LaunchScreen.xib */; };
 		5C4008D719FB990B001FBB6B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4008D619FB990B001FBB6B /* ViewController.m */; };
 		5C4008EF19FB9DB1001FBB6B /* EAColourfulProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4008EE19FB9DB1001FBB6B /* EAColourfulProgressView.m */; };
 /* End PBXBuildFile section */
@@ -38,7 +37,6 @@
 		5C4008CD19FB9880001FBB6B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5C4008CE19FB9880001FBB6B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5C4008D019FB98BE001FBB6B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		5C4008D119FB98BE001FBB6B /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		5C4008D519FB990B001FBB6B /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		5C4008D619FB990B001FBB6B /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		5C4008ED19FB9DB1001FBB6B /* EAColourfulProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAColourfulProgressView.h; sourceTree = "<group>"; };
@@ -133,7 +131,6 @@
 			isa = PBXGroup;
 			children = (
 				5C4008D019FB98BE001FBB6B /* Main.storyboard */,
-				5C4008D119FB98BE001FBB6B /* LaunchScreen.xib */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -238,7 +235,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C4008B319FB9565001FBB6B /* Images.xcassets in Resources */,
-				5C4008D319FB98BE001FBB6B /* LaunchScreen.xib in Resources */,
 				5C4008D219FB98BE001FBB6B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
