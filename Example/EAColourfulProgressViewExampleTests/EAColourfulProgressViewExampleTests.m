@@ -67,15 +67,21 @@
   UIColor *actualFinalColorSegment33to66 = [self.progressView finalSegmentColorForSegmentType:EAColourfulProgressViewType33to66];
   UIColor *actualFinalColorSegment66to100 = [self.progressView finalSegmentColorForSegmentType:EAColourfulProgressViewType66to100];
   
-  BOOL expectedResultInitialColor = ([actualInitialColorSegment0to33 isEqual:expectedInitialColor]);
-  BOOL expectedResultOneThirdColor = ([actualInitialColorSegment33to66 isEqual:expectedOneThirdColor]);
-  BOOL expectedResultTwoThirdsColor = ([actualInitialColorSegment66to100 isEqual:expectedTwoThirdsColor]);
-  BOOL expectedResultFinalColor = ([actualFinalColorSegment66to100 isEqual:expectedFinalColor]);
+  BOOL expectedResultInitialColor = [actualInitialColorSegment0to33 isEqual:expectedInitialColor];
+  BOOL expectedResultOneThirdColor = [actualInitialColorSegment33to66 isEqual:expectedOneThirdColor];
+  BOOL expectedResultTwoThirdsColor = [actualInitialColorSegment66to100 isEqual:expectedTwoThirdsColor];
+  BOOL expectedResultFinalColor = [actualFinalColorSegment66to100 isEqual:expectedFinalColor];
 
   XCTAssert(expectedResultInitialColor, @"Expected the initial color to be %@ but got %@", expectedInitialColor, actualInitialColorSegment0to33);
   XCTAssert(expectedResultOneThirdColor, @"Expected the one third color to be %@ but got %@", expectedOneThirdColor, actualInitialColorSegment33to66);
   XCTAssert(expectedResultTwoThirdsColor, @"Expected the two thirds color to be %@ but got %@", expectedTwoThirdsColor, actualInitialColorSegment66to100);
   XCTAssert(expectedResultFinalColor, @"Expected the final color to be %@ but got %@", expectedFinalColor, actualFinalColorSegment66to100);
+
+  BOOL expectedOneThirdColorMatch = [actualInitialColorSegment33to66 isEqual:actualFinalColorSegment0to33];
+  BOOL expectedTwoThirdColorMatch = [actualInitialColorSegment66to100 isEqual:actualFinalColorSegment33to66];
+  
+  XCTAssert(expectedOneThirdColorMatch, @"The initial color of segment 33to66 and the final color of segment 0 to 33 should match");
+  XCTAssert(expectedTwoThirdColorMatch, @"The initial color of segment 66to100 and the final color of segment 33 to 66 should match");
 }
 
 @end
