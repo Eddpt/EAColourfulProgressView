@@ -8,13 +8,7 @@
 
 #import "EAColourfulProgressView.h"
 
-typedef NS_ENUM(NSInteger, EAColourfulProgressViewType) {
-  EAColourfulProgressViewType0to33 = 33,
-  EAColourfulProgressViewType33to66 = 66,
-  EAColourfulProgressViewType66to100 = 100
-};
-
-static NSUInteger const EAColourfulProgressViewLabelTopMargin = 5;
+static NSUInteger const EAColourfulProgressViewTopMargin = 5;
 static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
 
 @interface EAColourfulProgressView ()
@@ -135,7 +129,7 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
   self.initialLabel.textAlignment = NSTextAlignmentLeft;
   [self addSubview:self.initialLabel];
   
-  NSString *visualFormatString = [NSString stringWithFormat:@"V:|[_backgroundView]-%@-[_initialLabel]|", @(EAColourfulProgressViewLabelTopMargin)];
+  NSString *visualFormatString = [NSString stringWithFormat:@"V:|[_backgroundView]-%@-[_initialLabel]|", @(EAColourfulProgressViewTopMargin)];
   [self addConstraints:[NSLayoutConstraint
                         constraintsWithVisualFormat:visualFormatString
                         options:0 metrics:nil
@@ -160,7 +154,7 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
   self.finalLabel.textAlignment = NSTextAlignmentRight;
   [self addSubview:self.finalLabel];
   
-  NSString *visualFormatString = [NSString stringWithFormat:@"V:|[_backgroundView]-%@-[_finalLabel]|", @(EAColourfulProgressViewLabelTopMargin)];
+  NSString *visualFormatString = [NSString stringWithFormat:@"V:|[_backgroundView]-%@-[_finalLabel]|", @(EAColourfulProgressViewTopMargin)];
   [self addConstraints:[NSLayoutConstraint
                         constraintsWithVisualFormat:visualFormatString
                         options:0

@@ -8,6 +8,12 @@
 
 @import UIKit;
 
+typedef NS_ENUM(NSInteger, EAColourfulProgressViewType) {
+  EAColourfulProgressViewType0to33 = 33,
+  EAColourfulProgressViewType33to66 = 66,
+  EAColourfulProgressViewType66to100 = 100
+};
+
 IB_DESIGNABLE
 @interface EAColourfulProgressView : UIView
 
