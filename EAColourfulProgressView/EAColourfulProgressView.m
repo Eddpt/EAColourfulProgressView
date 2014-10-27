@@ -55,22 +55,12 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
 
 - (void)setupBackgroundView
 {
-  CGFloat height = ceilf((self.showLabels ? 0.65f : 1.0f) * self.bounds.size.height);
-  self.backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, height)];
-  self.backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
-  self.backgroundView.backgroundColor = self.containerColor;
-  
   [self addSubview:self.backgroundView];
   
-  NSString *visualFormatString = [NSString stringWithFormat:@"V:|-0-[_backgroundView(%@)]->=0-|", @(height)];
-  [self addConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:visualFormatString
-                        options:0 metrics:nil
-                        views:NSDictionaryOfVariableBindings(_backgroundView)]];
-  [self addConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|-0-[_backgroundView]-0-|"
-                        options:0 metrics:nil
-                        views:NSDictionaryOfVariableBindings(_backgroundView)]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[backgroundView(bvHeight)]->=0-|"
+                                                               options:0 metrics:self.viewMetrics views:self.viewsDictionary]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[backgroundView]-0-|"
+                                                               options:0 metrics:nil views:self.viewsDictionary]];
   
   self.backgroundView.layer.cornerRadius = self.cornerRadius;
   self.backgroundView.layer.masksToBounds = YES;
@@ -78,40 +68,21 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
 
 - (void)setupFillingView
 {
-  CGFloat borders = 2 * self.borderLineWidth;
-  CGFloat width = ceilf((self.backgroundView.bounds.size.width - borders) * self.fractionLeft);
-  CGFloat height = (self.backgroundView.bounds.size.height - borders);
-  NSString *borderString = @(self.borderLineWidth).stringValue;
-  
-  self.fillingView = [[UIView alloc] initWithFrame:CGRectMake(self.borderLineWidth, self.borderLineWidth,
-                                                              width, height)];
-  self.fillingView.translatesAutoresizingMaskIntoConstraints = NO;
-  self.fillingView.backgroundColor = self.fillingColor;
-  
   [self.backgroundView addSubview:self.fillingView];
   
-  NSString *visualFormatString = [NSString stringWithFormat:@"V:|-%@-[_fillingView(%@)]->=%@-|", borderString, @(height), borderString];
-  [self.backgroundView addConstraints:[NSLayoutConstraint
-                                       constraintsWithVisualFormat:visualFormatString
-                                       options:0 metrics:nil
-                                       views:NSDictionaryOfVariableBindings(_fillingView)]];
-  visualFormatString = [NSString stringWithFormat:@"H:|-%@-[_fillingView]->=%@-|", borderString, borderString];
-  [self.backgroundView addConstraints:[NSLayoutConstraint
-                                       constraintsWithVisualFormat:visualFormatString
-                                       options:0 metrics:nil
-                                       views:NSDictionaryOfVariableBindings(_fillingView)]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-bPadding-[fillingView(fvHeight)]->=bPadding-|"
+                                                                              options:0 metrics:self.viewMetrics views:self.viewsDictionary]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-bPadding-[fillingView]->=bPadding-|"
+                                                                              options:0 metrics:self.viewMetrics views:self.viewsDictionary]];
   
   self.fillingWidthConstraint = [NSLayoutConstraint constraintWithItem:self.fillingView
                                                              attribute:NSLayoutAttributeWidth
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:nil
-                                                             attribute:0
-                                                            multiplier:1
-                                                              constant:width];
+                                                             relatedBy:NSLayoutRelationEqual toItem:nil attribute:0
+                                                            multiplier:1 constant:self.fillingViewWidth];
   [self.fillingView addConstraint:self.fillingWidthConstraint];
-
   
-  self.fillingView.layer.cornerRadius = (width > self.cornerRadius) ? self.cornerRadius : 0;
+  
+  self.fillingView.layer.cornerRadius = (self.fillingViewWidth > self.cornerRadius) ? self.cornerRadius : 0;
   self.fillingView.layer.masksToBounds = YES;
 }
 
@@ -121,23 +92,12 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
     return;
   }
   
-  self.initialLabel = [[UILabel alloc] init];
-  self.initialLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  self.initialLabel.text = @"0";
-  self.initialLabel.textColor = self.labelTextColor;
-  self.initialLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
-  self.initialLabel.textAlignment = NSTextAlignmentLeft;
   [self addSubview:self.initialLabel];
   
-  NSString *visualFormatString = [NSString stringWithFormat:@"V:|[_backgroundView]-%@-[_initialLabel]|", @(EAColourfulProgressViewTopMargin)];
-  [self addConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:visualFormatString
-                        options:0 metrics:nil
-                        views:NSDictionaryOfVariableBindings(_backgroundView, _initialLabel)]];
-  [self addConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|-0-[_initialLabel]->=0-|"
-                        options:0 metrics:nil
-                        views:NSDictionaryOfVariableBindings(_initialLabel)]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[backgroundView]-mPadding-[initialLabel]|"
+                                                               options:0 metrics:self.viewMetrics views:self.viewsDictionary]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[initialLabel]->=0-|"
+                                                               options:0 metrics:nil views:self.viewsDictionary]];
 }
 
 - (void)setupFinalLabel
@@ -146,25 +106,12 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
     return;
   }
   
-  self.finalLabel = [[UILabel alloc] init];
-  self.finalLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  self.finalLabel.text = [NSString stringWithFormat:@"%zd", self.maximumValue];
-  self.finalLabel.textColor = self.labelTextColor;
-  self.finalLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
-  self.finalLabel.textAlignment = NSTextAlignmentRight;
   [self addSubview:self.finalLabel];
   
-  NSString *visualFormatString = [NSString stringWithFormat:@"V:|[_backgroundView]-%@-[_finalLabel]|", @(EAColourfulProgressViewTopMargin)];
-  [self addConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:visualFormatString
-                        options:0
-                        metrics:nil
-                        views:NSDictionaryOfVariableBindings(_backgroundView, _finalLabel)]];
-  [self addConstraints:[NSLayoutConstraint
-                        constraintsWithVisualFormat:@"H:|-0-[_initialLabel]->=0-[_finalLabel]-0-|"
-                        options:0
-                        metrics:nil
-                        views:NSDictionaryOfVariableBindings(_initialLabel, _finalLabel)]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[backgroundView]-mPadding-[finalLabel]|"
+                                                               options:0 metrics:self.viewMetrics views:self.viewsDictionary]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[initialLabel]->=0-[finalLabel]-0-|"
+                                                               options:0 metrics:nil views:self.viewsDictionary]];
 }
 
 
@@ -232,11 +179,6 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
 
 - (float)fractionLeft
 {
-  return [self fractionLeftWithCurrentValueIncluded:YES];
-}
-
-- (float)fractionLeftWithCurrentValueIncluded:(BOOL)shouldIncludeCurrentValue
-{
   float maximumValue = (float)self.maximumValue;
   maximumValue = ((maximumValue > 0) ? maximumValue : 1);
   
@@ -248,7 +190,7 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
     return 0;
   }
   
-  return ((maximumValue - (self.currentValue - ((shouldIncludeCurrentValue) ? 1 : 0))) / maximumValue);
+  return ((maximumValue - (self.currentValue - 1))) / maximumValue;
 }
 
 - (float)segmentFractionLeft
@@ -261,6 +203,102 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
     segmentValue = segmentValue - maximumValue;
   }
   return ((maximumValue - segmentValue) / maximumValue);
+}
+
+
+#pragma mark - Auto Layout Helpers
+
+- (NSDictionary *)viewsDictionary
+{
+  NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(self.backgroundView, self.fillingView, self.initialLabel, self.finalLabel);
+  NSMutableDictionary *viewsMutableDictionary = [NSMutableDictionary dictionary];
+  
+  [viewsDictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop) {
+    NSString *strippedKey = [key stringByReplacingOccurrencesOfString:@"self." withString:@""];
+    viewsMutableDictionary[strippedKey] = obj;
+  }];
+  
+  return viewsMutableDictionary.copy;
+}
+
+- (NSDictionary *)viewMetrics
+{
+  return @{ @"bPadding" : @(self.borderLineWidth), @"mPadding" : @(EAColourfulProgressViewTopMargin),
+            @"bvHeight" : @(self.backgroundViewHeight), @"fvHeight" : @(self.fillingViewHeight) };
+}
+
+- (CGFloat)backgroundViewHeight
+{
+  return ceilf((self.showLabels ? 0.65f : 1.0f) * self.bounds.size.height);
+}
+
+- (CGFloat)fillingViewHeight
+{
+  return (self.backgroundView.bounds.size.height - self.borders);
+}
+
+- (CGFloat)fillingViewWidth
+{
+  return ceilf((self.backgroundView.bounds.size.width - self.borders) * self.fractionLeft);
+}
+
+- (CGFloat)borders
+{
+  return 2 * self.borderLineWidth;
+}
+
+
+#pragma mark - Lazy Initializers
+
+- (UIView *)backgroundView
+{
+  if (!_backgroundView) {
+    self.backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.backgroundViewHeight)];
+    self.backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.backgroundView.backgroundColor = self.containerColor;
+  }
+  
+  return _backgroundView;
+}
+
+- (UIView *)fillingView
+{
+  if (!_fillingView) {
+    self.fillingView = [[UIView alloc] initWithFrame:CGRectMake(self.borderLineWidth, self.borderLineWidth,
+                                                                self.fillingViewWidth, self.fillingViewHeight)];
+    self.fillingView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.fillingView.backgroundColor = self.fillingColor;
+  }
+  
+  return _fillingView;
+}
+
+- (UILabel *)initialLabel
+{
+  if (!_initialLabel) {
+    self.initialLabel = [[UILabel alloc] init];
+    self.initialLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.initialLabel.text = @"0";
+    self.initialLabel.textColor = self.labelTextColor;
+    self.initialLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
+    self.initialLabel.textAlignment = NSTextAlignmentLeft;
+  }
+  
+  return _initialLabel;
+}
+
+- (UILabel *)finalLabel
+{
+  if (!_finalLabel) {
+    self.finalLabel = [[UILabel alloc] init];
+    self.finalLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.finalLabel.text = [NSString stringWithFormat:@"%zd", self.maximumValue];
+    self.finalLabel.textColor = self.labelTextColor;
+    self.finalLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
+    self.finalLabel.textAlignment = NSTextAlignmentRight;
+  }
+  
+  return _finalLabel;
 }
 
 
