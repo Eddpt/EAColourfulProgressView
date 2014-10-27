@@ -313,8 +313,7 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
     case EAColourfulProgressViewType33to66:
       return [self initialSegmentColorForSegmentType:EAColourfulProgressViewType66to100];
       
-    case EAColourfulProgressViewType66to100:
-      return self.finalFillColor;
+    case EAColourfulProgressViewType66to100: return self.finalFillColor;
   }
   
   return nil;
@@ -323,14 +322,9 @@ static NSUInteger const EAColourfulProgressViewNumberOfSegments = 3;
 - (UIColor *)initialSegmentColorForSegmentType:(EAColourfulProgressViewType)segmentType
 {
   switch (segmentType) {
-    case EAColourfulProgressViewType0to33:
-      return self.initialFillColor;
-      
-    case EAColourfulProgressViewType33to66:
-      return self.oneThirdFillColor;
-      
-    case EAColourfulProgressViewType66to100:
-      return self.twoThirdsFillColor;
+    case EAColourfulProgressViewType0to33: return self.initialFillColor;
+    case EAColourfulProgressViewType33to66: return self.oneThirdFillColor;
+    case EAColourfulProgressViewType66to100: return self.twoThirdsFillColor;
   }
   
   return nil;
