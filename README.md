@@ -1,5 +1,9 @@
 EAColourfulProgressView
 =======================
+[![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat)](https://developer.apple.com/iphone/index.action)
+[![Language](http://img.shields.io/badge/language-objc-brightgreen.svg?style=flat)](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
+[![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org)
+[![Issues](https://img.shields.io/github/issues/Eddpt/EAColourfulProgressView.svg?style=flat)](https://github.com/Eddpt/EAColourfulProgressView?state=open)
 
 ![](https://raw.githubusercontent.com/Eddpt/EAColourfulProgressView/develop/demo.gif)
 
