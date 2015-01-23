@@ -33,6 +33,8 @@ Add this in your Podfile
 pod 'EAColourfulProgressView', '~> 0.1.0'
 ```
 
+**Note:** In order to have Live Rendering working properly, please install the `Cocoapods 0.36.0.beta.1` or newer, and make sure `use_frameworks!` is added to your `Podfile`. More details [here](http://stackoverflow.com/a/28108248/764822).
+
 ##Usage
 Set the `Custom Class` of a `UIView` to `EAColourfulProgressView` in Interface Builder, customize the available variables and see them being live rendered ;)
 
