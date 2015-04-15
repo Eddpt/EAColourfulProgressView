@@ -14,7 +14,15 @@ typedef NS_ENUM(NSInteger, EAColourfulProgressViewType) {
   EAColourfulProgressViewType66to100 = 100
 };
 
-IB_DESIGNABLE
+/* Temporarily disabling IB_DESIGNABLE after reports of Xcode 6.3 hanging.
+ *
+ * http://stackoverflow.com/questions/29544738/xcode-6-3-freezes-hangs-after-opening-xib-file
+ *
+ * http://stackoverflow.com/questions/29542356/xcode-6-3-crashes-when-navigating-from-storyboard-to-other-swift-1-2-file
+ *
+ * Should be re-enabled once Apple fixes the issue.
+ */
+//IB_DESIGNABLE
 @interface EAColourfulProgressView : UIView
 
 /**
